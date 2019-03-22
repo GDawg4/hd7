@@ -1,6 +1,8 @@
+import javax.sound.midi.Soundbank;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.SortedMap;
 
 public class Main {
 
@@ -62,8 +64,22 @@ public class Main {
             System.out.println("Algo salió mal, favor intentar nuevamente");
         }
         else {
-            System.out.println(mainTree.traverseInOrder(mainTree.root, "woman"));
-            System.out.println(mainTree.traverseInOrder(mainTree.root, "test"));
+            StringBuilder finalString = new StringBuilder();
+            for (String i : wordsToTranslate){
+                if (mainTree.traverseInOrder(mainTree.root, i).equals("not found")){
+                    finalString.append("*");
+                    finalString.append(i);
+                    finalString.append("*");
+                    finalString.append(" ");
+
+                }else {
+                    finalString.append(mainTree.traverseInOrder(mainTree.root, i));
+                    finalString.append(" ");
+                }
+            }
+            finalString.append(".");
+            System.out.println("Su traducción");
+            System.out.println(finalString);
         }
     }
 }

@@ -32,15 +32,19 @@ public class BinaryTree<E> {
     }
 
     public String traverseInOrder(Node node, String toLookFor) {
+        String foundSomething = "not found";
+
         if (node != null) {
-            if (node.english.equals(toLookFor) ){
-                return node.english;
+            if (node.english.compareTo(toLookFor) == 0){
+                return node.spanish;
+            }else {
+                foundSomething = traverseInOrder(node.left, toLookFor);
+                if (foundSomething.compareTo("not found") == 0){
+                    foundSomething = traverseInOrder(node.right, toLookFor);
+                }
             }
-            traverseInOrder(node.left, toLookFor);
-            traverseInOrder(node.right, toLookFor);
-            return node.english;
         }
-        return "";
+        return foundSomething;
     }
 
     class Node {
