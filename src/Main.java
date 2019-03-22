@@ -4,18 +4,42 @@ import java.util.Collections;
 
 public class Main {
 
+    public static String[] getWords(){
+        File fileTranslate = new File("C:\\Users\\garoz\\Desktop\\2019\\Estructura de datos\\hdt7\\src\\EnglishPhrase.txt");
+
+        String[] words = new String[0];
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(fileTranslate));
+
+            String st;
+            while ((st = br.readLine()) != null){
+                //tomado de https://stackoverflow.com/questions/18830813/how-can-i-remove-punctuation-from-input-text-in-java
+                words = st.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+                return words;
+            }
+
+        }catch (FileNotFoundException e){
+            System.out.println("couldnt find it");
+            return words;
+
+        }catch (IOException e){
+
+        }
+        return words;
+    }
+
     public static void main(String [] args){
         BinaryTree mainTree = new BinaryTree();
         mainTree = mainTree.createBinaryTree();
 
-
-        File file = new File("C:\\Users\\garoz\\Desktop\\2019\\Estructura de datos\\hdt7\\src\\Traducciones.txt");
+        //extraído de https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
+        File fileDatabase = new File("C:\\Users\\garoz\\Desktop\\2019\\Estructura de datos\\hdt7\\src\\Traducciones.txt");
         String[] twoParts = new String[2];
         String cleanString1 = "";
         String cleanString2 = "";
         String cleanString3 = "";
         try{
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new FileReader(fileDatabase));
 
             String st;
             while ((st = br.readLine()) != null){
@@ -32,8 +56,14 @@ public class Main {
         }catch (IOException e){
 
         }
-        System.out.println(mainTree.root.left.right.english);
+        String[] wordsToTranslate = getWords();
+
+        if (wordsToTranslate.length == 0){
+            System.out.println("Algo salió mal, favor intentar nuevamente");
+        }
+        else {
+            System.out.println(mainTree.traverseInOrder(mainTree.root, "woman"));
+            System.out.println(mainTree.traverseInOrder(mainTree.root, "test"));
+        }
     }
-
-
 }

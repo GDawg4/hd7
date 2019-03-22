@@ -31,6 +31,18 @@ public class BinaryTree<E> {
         return current;
     }
 
+    public String traverseInOrder(Node node, String toLookFor) {
+        if (node != null) {
+            if (node.english.equals(toLookFor) ){
+                return node.english;
+            }
+            traverseInOrder(node.left, toLookFor);
+            traverseInOrder(node.right, toLookFor);
+            return node.english;
+        }
+        return "";
+    }
+
     class Node {
         String english;
         String spanish;
