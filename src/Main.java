@@ -1,7 +1,18 @@
 import java.io.*;
 
+
+/**
+ * @author Rodrigo Garoz 18102
+ * The type Main.
+ * Programa para diccionarion inglés español con árboles binarios y búsqueda In Order
+ */
 public class Main {
 
+    /**
+     * Get words string [ ].
+     *
+     * @return the string [ ]
+     */
     public static String[] getWords(){
         File fileTranslate = new File("C:\\Users\\garoz\\Desktop\\2019\\Estructura de datos\\hdt7\\src\\EnglishPhrase.txt");
 
@@ -26,6 +37,11 @@ public class Main {
         return words;
     }
 
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
     public static void main(String [] args){
         System.out.println("Se incluyen los archivos .txt English Phrase y Traducciones con los que se probó");
         System.out.println("El camino es el usado en mi compu, pero puede ser cambiado en línea 9 y 40");
