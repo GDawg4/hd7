@@ -2,77 +2,46 @@ import com.sun.nio.sctp.Association;
 
 import java.util.HashMap;
 
-public class BinaryTree<E>{
-    protected BinaryTree<E> parent;
-    protected BinaryTree<E> left;
-    protected BinaryTree<E> right;
-    protected Comparable spanish;
-    protected Comparable english;
+public class BinaryTree<E> {
+    //tomado de https://www.baeldung.com/java-binary-tree
+    Node root;
 
-    public BinaryTree(){
-        spanish = null;
-        english = null;
-        parent = null;
-        left = null;
-        right = null;
+    public BinaryTree createBinaryTree() {
+        BinaryTree bt = new BinaryTree();
+
+        return bt;
     }
 
-    public BinaryTree(Comparable valueSpanish, Comparable valueEnglish){
-        spanish = valueSpanish;
-        english = valueEnglish;
-        right = new BinaryTree<E>();
-        left = new BinaryTree<E>();
-        parent = new BinaryTree<E>();
+    public void add(String valueE, String valueS) {
+        root = addRecursive(root, valueE, valueS);
     }
 
-    public BinaryTree(Comparable valueSpanish, Comparable valueEnglish, BinaryTree<E> left, BinaryTree<E> right){
-        spanish = valueSpanish;
-        english = valueEnglish;
-        if (left == null){
-            left = new BinaryTree<>();
+    private Node addRecursive(Node current, String valueE, String valueS) {
+
+        if (current == null) {
+            return new Node(valueE, valueS);
         }
-        //setLeft(left)
-        if (right == null){
-            //setRight(right)
+
+        if (valueE.compareTo(current.english) < 0) {
+            current.left = addRecursive(current.left, valueE, valueS);
+        } else if (valueE.compareTo(current.english) > 0) {
+            current.right = addRecursive(current.right, valueE, valueS);
         }
+
+        return current;
     }
 
-    public BinaryTree<E> getParent() {
-        return parent;
-    }
+    class Node {
+        String english;
+        String spanish;
+        Node left;
+        Node right;
 
-    public void setParent(BinaryTree<E> newParent) {
-        if (newParent != null) {
-            parent = newParent;
+        Node(String english, String spanish) {
+            this.english = english;
+            this.spanish = spanish;
+            right = null;
+            left = null;
         }
-    }
-
-    public BinaryTree<E> getLeft() {
-        return left;
-    }
-
-    public void setLeft(BinaryTree<E> newLeft) {
-        if (left == null) return;
-        if (left.parent == this) {
-            left.setParent(null);
-        }
-        left = newLeft;
-        left.setParent(this);
-    }
-
-    public BinaryTree<E> getRight() {
-        return right;
-    }
-
-    public void setRight(BinaryTree<E> right) {
-        this.right = right;
-    }
-
-    public Comparable getSpanish() {
-        return spanish;
-    }
-
-    public Comparable getEnglish() {
-        return english;
     }
 }
