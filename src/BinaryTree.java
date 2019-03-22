@@ -1,7 +1,3 @@
-import com.sun.nio.sctp.Association;
-
-import java.util.HashMap;
-
 public class BinaryTree<E> {
     //tomado de https://www.baeldung.com/java-binary-tree
     Node root;
@@ -31,21 +27,32 @@ public class BinaryTree<E> {
         return current;
     }
 
-    public String traverseInOrder(Node node, String toLookFor) {
+    public String findInOrder(Node node, String toLookFor) {
         String foundSomething = "not found";
 
         if (node != null) {
             if (node.english.compareTo(toLookFor) == 0){
                 return node.spanish;
             }else {
-                foundSomething = traverseInOrder(node.left, toLookFor);
+                foundSomething = findInOrder(node.left, toLookFor);
                 if (foundSomething.compareTo("not found") == 0){
-                    foundSomething = traverseInOrder(node.right, toLookFor);
+                    foundSomething = findInOrder(node.right, toLookFor);
                 }
             }
         }
         return foundSomething;
     }
+
+    public void traverseInOrder(Node node){
+        //imprimir en función es malo, pero no encontré otra manera
+        if (node != null){
+            traverseInOrder(node.left);
+            System.out.println(node.english);
+            traverseInOrder(node.right);
+        }
+
+    }
+
 
     class Node {
         String english;

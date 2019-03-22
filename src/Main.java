@@ -1,8 +1,4 @@
-import javax.sound.midi.Soundbank;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.SortedMap;
 
 public class Main {
 
@@ -31,12 +27,13 @@ public class Main {
     }
 
     public static void main(String [] args){
+        System.out.println("Se incluyen los archivos .txt English Phrase y Traducciones con los que se probó");
+        System.out.println("El camino es el usado en mi compu, pero puede ser cambiado en línea 9 y 40");
         BinaryTree mainTree = new BinaryTree();
         mainTree = mainTree.createBinaryTree();
 
         //extraído de https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
         File fileDatabase = new File("C:\\Users\\garoz\\Desktop\\2019\\Estructura de datos\\hdt7\\src\\Traducciones.txt");
-        String[] twoParts = new String[2];
         String cleanString1 = "";
         String cleanString2 = "";
         String cleanString3 = "";
@@ -48,7 +45,7 @@ public class Main {
                 cleanString1 = st.replaceFirst("\\(", "");
                 cleanString2 = cleanString1.replace(")","");
                 cleanString3 = cleanString2.replace(" ","");
-                twoParts = cleanString3.split(",");
+                String [] twoParts = cleanString3.split(",");
                 mainTree.add(twoParts[0], twoParts[1]);
             }
 
@@ -58,6 +55,9 @@ public class Main {
         }catch (IOException e){
 
         }
+        System.out.println("Base de datos en modo In Order");
+        mainTree.traverseInOrder(mainTree.root);
+
         String[] wordsToTranslate = getWords();
 
         if (wordsToTranslate.length == 0){
@@ -66,14 +66,14 @@ public class Main {
         else {
             StringBuilder finalString = new StringBuilder();
             for (String i : wordsToTranslate){
-                if (mainTree.traverseInOrder(mainTree.root, i).equals("not found")){
+                if (mainTree.findInOrder(mainTree.root, i).equals("not found")){
                     finalString.append("*");
                     finalString.append(i);
                     finalString.append("*");
                     finalString.append(" ");
 
                 }else {
-                    finalString.append(mainTree.traverseInOrder(mainTree.root, i));
+                    finalString.append(mainTree.findInOrder(mainTree.root, i));
                     finalString.append(" ");
                 }
             }
